@@ -1,6 +1,7 @@
 var canvas = document.querySelector('#tic-tac-toe');
 var context = canvas.getContext('2d');
-var canvasSize = 500/3; // 166 the approximate size of each columm
+var columnSize = 500/3; // 166 the approximate size of each columm
+var playerTurn = 'o';
 
 const drawBoard = () => {
   /**
@@ -19,16 +20,16 @@ const drawBoard = () => {
    * moveTo(beginning X, beginning Y)
    */
   for (let i = 1; i <= 2; i++) {
-    context.moveTo(canvasSize * i, 5);
-    context.lineTo(canvasSize * i, 495)
+    context.moveTo(columnSize * i, 5);
+    context.lineTo(columnSize * i, 495)
   }
 
   /**
    * This draws the vertical lines
    */
   for (let i = 1; i <= 2; i++) {
-    context.moveTo(0, canvasSize * i);s
-    context.lineTo(495, canvasSize * i);
+    context.moveTo(0, columnSize * i);
+    context.lineTo(495, columnSize * i);
   }
 
   /**
@@ -38,31 +39,61 @@ const drawBoard = () => {
 };
 
 const addPiece = (mouseCoordinates) => {
-  let xCoordinate;
-  let yCoordinate;
-
-  for(let x = 0; x < 3; x++) {
-    for(let y = 0; y < 3; y++) {
-      var cavasX = x * canvasSize;
-      var canvasY = y * canvasSize;
+  for(var x = 0; x < 3; x++) {
+    for(var y = 0; y < 3; y++) {
+      var canvasX = x * columnSize;
+      var canvasY = y * columnSize;
       var mouseX = mouseCoordinates.x;
       var mouseY = mouseCoordinates.y;
 
       /**
        * Checks if mouse coordinate are within the current section of the canvas
        */
-      if((mouseX >= canvasX && mouseX <= canvasX + cavasSize) &&
-        (mouseY >= canvasY && mouseY <= canvasY + cavasSize)) {
-
+      if((mouseX >= canvasX && mouseX <= canvasX + columnSize) &&
+        (mouseY >= canvasY && mouseY <= canvasY + columnSize)) {
+        if(playerTurn === 'x') {
+          drawX(canvasX, canvasY);
+        } else {
+          drawO(canvasX, canvasY);
+        }
       }
     }
   }
 }
 
-const drawO = (x, y) => {
+const getMouseCoordinates = (event) => {
+  var rect = canvas.getBoundingClientRect();
 
+  return {
+    x: event.clientX - rect.left,
+    y: event.clientY - rect.top
+  }
+}
+
+const drawO = (x, y) => {
+  let halfColumnSize = columnSize/2;
+  let centerX = x + halfColumnSize;
+  let centerY = y + halfColumnSize;
+  let radius = 66;
+  let start = 0 * Math.PI; // The point where the circle begins
+  let end = 2 * Math.PI;
+
+  context.beginPath();
+  context.strokeStyle = 'red';
+  context.lineWidth = 10;
+
+  context.beginPath();
+  context.arc(centerX, centerY, radius, start, end);
+  context.stroke();
 }
 
 const drawX = (x, y) => {
 
 }
+
+drawBoard();
+
+canvas.addEventListener('mouseup', function(event) {
+  var mousePos = getMouseCoordinates(event);
+  addPiece(mousePos);
+});
