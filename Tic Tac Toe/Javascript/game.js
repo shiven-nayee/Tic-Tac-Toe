@@ -1,7 +1,8 @@
 var canvas = document.querySelector('#tic-tac-toe');
 var context = canvas.getContext('2d');
+var canvasSize = 500/3; // 166 the approximate size of each columm
 
-var drawBoard = () => {
+const drawBoard = () => {
   /**
    * Begins the drawing path
    * strokeStyle changes the color of the lines
@@ -18,16 +19,16 @@ var drawBoard = () => {
    * moveTo(beginning X, beginning Y)
    */
   for (let i = 1; i <= 2; i++) {
-    context.moveTo(166 * i, 5);
-    context.lineTo(166 * i, 495)
+    context.moveTo(canvasSize * i, 5);
+    context.lineTo(canvasSize * i, 495)
   }
 
   /**
    * This draws the vertical lines
    */
   for (let i = 1; i <= 2; i++) {
-    context.moveTo(0, 166 * i);s
-    context.lineTo(495, 166 * i);
+    context.moveTo(0, canvasSize * i);s
+    context.lineTo(495, canvasSize * i);
   }
 
   /**
@@ -35,3 +36,33 @@ var drawBoard = () => {
    */
   context.stroke();
 };
+
+const addPiece = (mouseCoordinates) => {
+  let xCoordinate;
+  let yCoordinate;
+
+  for(let x = 0; x < 3; x++) {
+    for(let y = 0; y < 3; y++) {
+      var cavasX = x * canvasSize;
+      var canvasY = y * canvasSize;
+      var mouseX = mouseCoordinates.x;
+      var mouseY = mouseCoordinates.y;
+
+      /**
+       * Checks if mouse coordinate are within the current section of the canvas
+       */
+      if((mouseX >= canvasX && mouseX <= canvasX + cavasSize) &&
+        (mouseY >= canvasY && mouseY <= canvasY + cavasSize)) {
+
+      }
+    }
+  }
+}
+
+const drawO = (x, y) => {
+
+}
+
+const drawX = (x, y) => {
+
+}
