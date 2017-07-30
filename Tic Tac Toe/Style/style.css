@@ -1,0 +1,25 @@
+body {
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+  font-family: helvetica;
+}
+
+main {
+  margin: 0 auto;
+  justify-content: center;
+}
+
+p {
+  margin: auto;
+  justify-content: center;
+  text-align: center;
+  font-size: 4em;
+  padding: 20px;
+}
+
+canvas {
+  margin: auto;
+  display: block;
+  background-color: lightblue;
+  border-radius: 15px 50px;
+  padding: 10px;
+}
