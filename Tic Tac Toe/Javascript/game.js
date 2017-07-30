@@ -1,7 +1,111 @@
+var span = document.querySelector('span');
 var canvas = document.querySelector('#tic-tac-toe');
 var context = canvas.getContext('2d');
 var columnSize = 500 / 3; // 166 the approximate size of each columm
 var playerTurn = 'o';
+var arr = [
+  ['1', '2', '3'],
+  ['4', '5', '6'],
+  ['7', '8', '9']
+];
+
+
+
+
+// var confirm = window.confirm('Continue as player O?');
+// console.log(confirm);
+
+const changePlayerToX = () => {
+  span.textContent = 'X';
+  playerTurn = 'x';
+}
+
+const changePlayerToO = () => {
+  span.textContent = 'O';
+  playerTurn = 'o';
+}
+
+const checkDiag = () => {
+  // Needs to be made everytime in order to be updated;
+  let p1 = arr[0][0];
+  let p2 = arr[0][1];
+  let p3 = arr[0][2];
+  let p4 = arr[1][0];
+  let p5 = arr[1][1];
+  let p6 = arr[1][2];
+  let p7 = arr[2][0];
+  let p8 = arr[2][1];
+  let p9 = arr[2][2];
+
+  if (p1 === p5 && p1 === p9) {
+    return true;
+  } else if (p3 === p5 && p3 === p7) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+checkVertical = () => {
+  // Needs to be made everytime in order to be updated;
+  let p1 = arr[0][0];
+  let p2 = arr[0][1];
+  let p3 = arr[0][2];
+  let p4 = arr[1][0];
+  let p5 = arr[1][1];
+  let p6 = arr[1][2];
+  let p7 = arr[2][0];
+  let p8 = arr[2][1];
+  let p9 = arr[2][2];
+
+  if (p1 === p4 && p1 === p7) {
+    return true;
+  } else if (p2 === p5 && p2 === p8) {
+    return true;
+  } else if (p3 === p6 && p3 === p9) {
+    return true;
+  } else {
+    return false;
+  };
+}
+
+checkHorizontal = () => {
+  // Needs to be made everytime in order to be updated;
+  let p1 = arr[0][0];
+  let p2 = arr[0][1];
+  let p3 = arr[0][2];
+  let p4 = arr[1][0];
+  let p5 = arr[1][1];
+  let p6 = arr[1][2];
+  let p7 = arr[2][0];
+  let p8 = arr[2][1];
+  let p9 = arr[2][2];
+
+  if(p1 === p2 && p1 === p3) {
+    return true;
+  } else if (p4 === p5 && p4 === p6) {
+    return true;
+  } else if (p7 === p8 && p7 === p9) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+const checkForWin = () => {
+
+}
+
+const choosePlayer = () => {
+  if (confirm('Change player 1 piece to X?') == true) {
+    changePlayerToX();
+    console.log('ok');
+  } else {
+    changePlayerToO();
+    console.log('cancel');
+  }
+}
 
 const drawBoard = () => {
   /**
@@ -36,6 +140,8 @@ const drawBoard = () => {
    * Draws the lines on the DOM
    */
   context.stroke();
+
+  choosePlayer();
 };
 
 /**
@@ -59,10 +165,18 @@ const addPiece = (mouseCoordinates) => {
         (mouseY >= canvasY && mouseY <= canvasY + columnSize)) {
         if (playerTurn === 'x') {
           drawX(canvasX, canvasY);
-          playerTurn = 'o';
+          arr[y][x] = 1;
+          console.log(arr);
+          console.log(arr[y][x]);
+          console.log('X: ' + canvasX);
+          console.log('Y: ' + canvasY);
         } else {
           drawO(canvasX, canvasY);
-          playerTurn = 'x';
+          arr[y][x] = 0;
+          console.log(arr);
+          console.log(arr[y][x]);
+          console.log('X: ' + canvasX);
+          console.log('Y: ' + canvasY);
         }
       }
     }
@@ -105,6 +219,8 @@ const drawO = (x, y) => {
   context.beginPath();
   context.arc(centerX, centerY, radius, start, end);
   context.stroke();
+
+  changePlayerToX();
 }
 
 const drawX = (x, y) => {
@@ -121,6 +237,8 @@ const drawX = (x, y) => {
   context.moveTo(x + 50, y + columnSize - 50);
   context.lineTo(x + columnSize - 50, y + 50);
   context.stroke();
+
+  changePlayerToO();
 }
 
 drawBoard();
