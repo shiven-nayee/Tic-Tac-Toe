@@ -1,19 +1,16 @@
 var span = document.querySelector('span');
+var scoreX = document.querySelector('#playerX');
+var scoreY = document.querySelector('#playerY');
 var canvas = document.querySelector('#tic-tac-toe');
 var context = canvas.getContext('2d');
 var columnSize = 500 / 3; // 166 the approximate size of each columm
 var playerTurn = 'o';
+var winner = 10;
 var arr = [
   ['1', '2', '3'],
   ['4', '5', '6'],
   ['7', '8', '9']
 ];
-
-
-
-
-// var confirm = window.confirm('Continue as player O?');
-// console.log(confirm);
 
 const changePlayerToX = () => {
   span.textContent = 'X';
@@ -38,8 +35,10 @@ const checkDiag = () => {
   let p9 = arr[2][2];
 
   if (p1 === p5 && p1 === p9) {
+    winner = p1;
     return true;
   } else if (p3 === p5 && p3 === p7) {
+    winner = p3;
     return true;
   } else {
     return false;
@@ -59,10 +58,13 @@ checkVertical = () => {
   let p9 = arr[2][2];
 
   if (p1 === p4 && p1 === p7) {
+    winner = p1;
     return true;
   } else if (p2 === p5 && p2 === p8) {
+    winner = p2;
     return true;
   } else if (p3 === p6 && p3 === p9) {
+    winner = p3;
     return true;
   } else {
     return false;
@@ -81,7 +83,7 @@ checkHorizontal = () => {
   let p8 = arr[2][1];
   let p9 = arr[2][2];
 
-  if(p1 === p2 && p1 === p3) {
+  if (p1 === p2 && p1 === p3) {
     return true;
   } else if (p4 === p5 && p4 === p6) {
     return true;
@@ -92,9 +94,16 @@ checkHorizontal = () => {
   }
 }
 
-
 const checkForWin = () => {
-
+  if (checkDiag() || checkHorizontal() || checkVertical()) {
+    if (winner === 1) {
+      alert('Player X Wins!');
+    } else {
+      alert('Player Y Wins!');
+    }
+  } else {
+    console.log('not yet');
+  }
 }
 
 const choosePlayer = () => {
@@ -166,17 +175,19 @@ const addPiece = (mouseCoordinates) => {
         if (playerTurn === 'x') {
           drawX(canvasX, canvasY);
           arr[y][x] = 1;
-          console.log(arr);
-          console.log(arr[y][x]);
-          console.log('X: ' + canvasX);
-          console.log('Y: ' + canvasY);
+          checkForWin();
+          // console.log(arr);
+          // console.log(arr[y][x]);
+          // console.log('X: ' + canvasX);
+          // console.log('Y: ' + canvasY);
         } else {
           drawO(canvasX, canvasY);
           arr[y][x] = 0;
-          console.log(arr);
-          console.log(arr[y][x]);
-          console.log('X: ' + canvasX);
-          console.log('Y: ' + canvasY);
+          checkForWin();
+          // console.log(arr);
+          // console.log(arr[y][x]);
+          // console.log('X: ' + canvasX);
+          // console.log('Y: ' + canvasY);
         }
       }
     }
@@ -220,6 +231,7 @@ const drawO = (x, y) => {
   context.arc(centerX, centerY, radius, start, end);
   context.stroke();
 
+  // checkForWin();
   changePlayerToX();
 }
 
@@ -238,6 +250,7 @@ const drawX = (x, y) => {
   context.lineTo(x + columnSize - 50, y + 50);
   context.stroke();
 
+  // checkForWin();
   changePlayerToO();
 }
 
