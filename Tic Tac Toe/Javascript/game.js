@@ -14,11 +14,13 @@ var arr = [
 
 const changePlayerToX = () => {
   span.textContent = 'X';
+  span.style.color = 'blue';
   playerTurn = 'x';
 }
 
 const changePlayerToO = () => {
   span.textContent = 'O';
+  span.style.color = 'red';
   playerTurn = 'o';
 }
 
@@ -34,6 +36,7 @@ const checkDiag = () => {
   let p8 = arr[2][1];
   let p9 = arr[2][2];
 
+// Checks in any diagnols have won yet, sets winner to winning piece
   if (p1 === p5 && p1 === p9) {
     winner = p1;
     return true;
@@ -45,6 +48,7 @@ const checkDiag = () => {
   }
 }
 
+// Checks in any vertical have won yet, sets winner to winning piece
 checkVertical = () => {
   // Needs to be made everytime in order to be updated;
   let p1 = arr[0][0];
@@ -71,6 +75,7 @@ checkVertical = () => {
   };
 }
 
+// Checks in any horizontal have won yet, sets winner to winning piece
 checkHorizontal = () => {
   // Needs to be made everytime in order to be updated;
   let p1 = arr[0][0];
@@ -84,10 +89,13 @@ checkHorizontal = () => {
   let p9 = arr[2][2];
 
   if (p1 === p2 && p1 === p3) {
+    winner = p1;
     return true;
   } else if (p4 === p5 && p4 === p6) {
+    winner = p4;
     return true;
   } else if (p7 === p8 && p7 === p9) {
+    winner = p7;
     return true;
   } else {
     return false;
@@ -99,7 +107,7 @@ const checkForWin = () => {
     if (winner === 1) {
       alert('Player X Wins!');
     } else {
-      alert('Player Y Wins!');
+      alert('Player O Wins!');
     }
   } else {
     console.log('not yet');
@@ -162,8 +170,8 @@ const drawBoard = () => {
 const addPiece = (mouseCoordinates) => {
   for (var x = 0; x < 3; x++) {
     for (var y = 0; y < 3; y++) {
-      var canvasX = x * columnSize;
-      var canvasY = y * columnSize;
+      var canvasX = x * columnSize; //0, 1, 2
+      var canvasY = y * columnSize; //0, 1, 2
       var mouseX = mouseCoordinates.x;
       var mouseY = mouseCoordinates.y;
 
