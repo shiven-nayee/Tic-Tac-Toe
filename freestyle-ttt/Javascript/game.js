@@ -12,6 +12,12 @@ var arr = [
   ['7', '8', '9']
 ];
 
+var changesMade = [
+  [false, false, false],
+  [false, false, false],
+  [false, false, false]
+];
+
 const changePlayerToX = () => {
   span.textContent = 'X';
   span.style.color = 'blue';
@@ -22,6 +28,11 @@ const changePlayerToO = () => {
   span.textContent = 'O';
   span.style.color = 'red';
   playerTurn = 'o';
+}
+
+const resetBoard = () => {
+  context.clearRect(0, 0, 500, 500);
+  drawBoard();
 }
 
 const checkDiag = () => {
@@ -36,7 +47,7 @@ const checkDiag = () => {
   let p8 = arr[2][1];
   let p9 = arr[2][2];
 
-// Checks in any diagnols have won yet, sets winner to winning piece
+  // Checks in any diagnols have won yet, sets winner to winning piece
   if (p1 === p5 && p1 === p9) {
     winner = p1;
     return true;
@@ -106,7 +117,13 @@ const checkForWin = () => {
   if (checkDiag() || checkHorizontal() || checkVertical()) {
     if (winner === 1) {
       alert('Player X Wins!');
+      // if (confirm('Play again?')) {
+      //   resetBoard();
+      // }
     } else {
+      // if (confirm('Play again?')) {
+      //   resetBoard();
+      // }
       alert('Player O Wins!');
     }
   } else {
@@ -181,17 +198,35 @@ const addPiece = (mouseCoordinates) => {
       if ((mouseX >= canvasX && mouseX <= canvasX + columnSize) &&
         (mouseY >= canvasY && mouseY <= canvasY + columnSize)) {
         if (playerTurn === 'x') {
-          drawX(canvasX, canvasY);
-          arr[y][x] = 1;
-          checkForWin();
+          if (changesMade[y][x] === false) {
+            // console.log(y);
+            // console.log(x);
+            drawX(canvasX, canvasY);
+            arr[y][x] = 1;
+            changesMade[y][x] = true;
+            checkForWin();
+          }
+          // og code
+          // drawX(canvasX, canvasY);
+          // arr[y][x] = 1;
+          // checkForWin();
           // console.log(arr);
           // console.log(arr[y][x]);
           // console.log('X: ' + canvasX);
           // console.log('Y: ' + canvasY);
         } else {
-          drawO(canvasX, canvasY);
-          arr[y][x] = 0;
-          checkForWin();
+          if (changesMade[y][x] === false) {
+            // console.log(y);
+            // console.log(x);
+            drawO(canvasX, canvasY);
+            arr[y][x] = 0;
+            changesMade[y][x] = true;
+            checkForWin();
+          }
+          // og code
+          // drawO(canvasX, canvasY);
+          // arr[y][x] = 0;
+          // checkForWin();
           // console.log(arr);
           // console.log(arr[y][x]);
           // console.log('X: ' + canvasX);
@@ -271,4 +306,9 @@ drawBoard();
 canvas.addEventListener('mouseup', function(event) {
   var mousePos = getMouseCoordinates(event);
   addPiece(mousePos);
+  // if (winner == 0 || winner == 1) {
+  //   if(confirm('Would you like to play again?')) {
+  //     resetBoard();
+  //   }
+  // }
 });

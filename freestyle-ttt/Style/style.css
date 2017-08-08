@@ -29,11 +29,3 @@ canvas {
   border-radius: 15px 50px;
   padding: 10px;
 }
-
-#playerX {
-  color: blue;
-}
-
-#playerY {
-  color: red;
-}
